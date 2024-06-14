@@ -1,19 +1,6 @@
 const Report = require("../models/Report")
 const router = require("express").Router()
 
-//created database
-
-router.post("/record",async(req,res)=>{
-      const newrecord = new Report(req.body)
-      try{
-            const user = await newrecord.save()
-            res.status(200).json(user)
-      }
-      catch(err){
-            res.status(500).json(err)
-      }
-});
-
 //get me whole report of attendance
 
 //asynchandler can use if not want to use try catch
@@ -30,15 +17,19 @@ router.get("/",async(req,res)=>{
                   totalpages: Math.ceil(totalReports/limit),
                   currentPage: page
             })
+
 //Report is a new variable that client will be easy for him .. 
 //and sending him the Rapport .. Report is the key and Rapport is value/data
 //Report will have the all Report of all attendance
-      }
+      
+}
       catch(err){
             res.status(500).json(err)
       }
 });
-//start date se end tak 
+
+//start date se end tak
+ 
 router.get('/records', async(req,res)=>{
       try{
         const {startDate,endDate} = req.query;
