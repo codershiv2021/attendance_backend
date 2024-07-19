@@ -29,6 +29,10 @@ router.get("/",async(req,res)=>{
 });
 
 //start date se end tak
+
+const WORK_START_TIME = "10:00";
+const WORK_END_TIME = "18:00";
+
  
 router.get('/records', async(req,res)=>{
       try{
@@ -49,7 +53,10 @@ router.get('/records', async(req,res)=>{
             }
         }).sort({ Date: 1 });
 
-            res.json(records);
+      const lateArrivals = records.filter(record => record.In_time > WORK_START_TIME);
+        const earlyDepartures = records.filter(record => record.Out_time < WORK_END_TIME);
+        res.json({records,lateArrivals,earlyDepartures});
+
       }catch (err) {
             console.error(err);
             res.status(500).json(err);
